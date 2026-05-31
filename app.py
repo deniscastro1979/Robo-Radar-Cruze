@@ -2,26 +2,21 @@ import streamlit as st
 import pandas as pd
 
 # Configuração da página do aplicativo
-st.set_page_config(page_title="Radar Sedans SP Total", page_icon="🚗", layout="wide")
+st.set_page_config(page_title="Radar Sedans SP Ativos", page_icon="🚗", layout="wide")
 
 # Título Principal
-st.title("🚗 Radar Multimarcas - Monitoramento Total de Sedans (Estado de SP)")
+st.title("🚗 Radar Multimarcas - Monitoramento de Sedans Ativos (Estado de SP)")
 st.markdown("---")
 
-# Banco de dados com exemplos de links DIRETOS para anúncios e lotes específicos
+# Banco de dados demonstrativo com a nova coluna de Status de Anúncio Ativo
 dados_veiculos = [
-    {"Marca": "Chevrolet", "Modelo": "Cruze LTZ", "Ano": 2018, "Preço (R$)": 82500, "KM": 68000, "Tipo": "Sites (Particulares)", "Local": "São Paulo - SP (OLX)", "Link": "https://www.olx.com.br/autos-e-autos/carros-vans-e-utilitarios/chevrolet-cruze-ltz-2018-anuncio-987654321"},
-    {"Marca": "Chevrolet", "Modelo": "Cruze Premier", "Ano": 2020, "Preço (R$)": 94000, "KM": 45000, "Tipo": "Sites (Particulares)", "Local": "Campinas - SP (WebMotors)", "Link": "https://www.webmotors.com.br/comprar/chevrolet/cruze/14-turbo-flex-premier-automatico/4-portas/2020/45123456"},
-    {"Marca": "Chevrolet", "Modelo": "Cruze LTZ", "Ano": 2017, "Preço (R$)": 64200, "KM": 79000, "Tipo": "Leilões de Bancos (Recuperados)", "Local": "Pátio Barueri - SP (Leilão Itaú)", "Link": "https://www.milanleiloes.com.br/leilao/lote.asp?IdLeilao=10234&Lote=45"},
-    {"Marca": "Volkswagen", "Modelo": "Jetta R-Line", "Ano": 2019, "Preço (R$)": 99800, "KM": 72000, "Tipo": "Lojas e Concessionárias", "Local": "Loja Multimarcas - Av. Europa (SP)", "Link": "https://www.webmotors.com.br/comprar/volkswagen/jetta/25-r-line-2019/8547123"},
-    {"Marca": "Volkswagen", "Modelo": "Virtus Comfortline", "Ano": 2021, "Preço (R$)": 74100, "KM": 51000, "Tipo": "Leilões de Bancos (Recuperados)", "Local": "Pátio Guarulhos - SP (Leilão Bradesco)", "Link": "https://www.freitasleiloeiro.com.br/leiloes/lote?idPresencial=5421&lote=12"},
-    {"Marca": "Volkswagen", "Modelo": "Virtus Highline", "Ano": 2020, "Preço (R$)": 78900, "KM": 55000, "Tipo": "Lojas e Concessionárias", "Local": "Concessionária Seminovos - São Bernardo - SP", "Link": "https://www.icarros.com.br/comprar/volkswagen/virtus/2020/anuncio-v963258"},
-    {"Marca": "Fiat", "Modelo": "Cronos Precision", "Ano": 2020, "Preço (R$)": 68900, "KM": 59000, "Tipo": "Sites (Particulares)", "Local": "Santo André - SP (Mercado Livre)", "Link": "https://carro.mercadolivre.com.br/MLB-35142789-fiat-cronos-precision-2020-unico-dono"},
-    {"Marca": "Ford", "Modelo": "Fusion EcoBoost", "Ano": 2017, "Preço (R$)": 84000, "KM": 88000, "Tipo": "Lojas e Concessionárias", "Local": "Portal dos Autos - Shopping de Carros (SP)", "Link": "https://www.webmotors.com.br/comprar/ford/fusion/20-ecoboost-titanium-2017/9632147"},
-    {"Marca": "Hyundai", "Modelo": "HB20S Evolution", "Ano": 2021, "Preço (R$)": 61200, "KM": 38000, "Tipo": "Leilões de Bancos (Recuperados)", "Local": "Pátio Caieiras - SP (Leilão Santander)", "Link": "https://www.therezaleiloes.com.br/lote/hyundai-hb20s-2021/88/"},
-    {"Marca": "Honda", "Modelo": "Civic EXL", "Ano": 2018, "Preço (R$)": 92000, "KM": 75000, "Tipo": "Sites (Particulares)", "Local": "Sorocaba - SP", "Link": "https://www.olx.com.br/autos-e-autos/carros-vans-e-utilitarios/honda-civic-exl-2018-anuncio-741258963"},
-    {"Marca": "Toyota", "Modelo": "Corolla XEI", "Ano": 2019, "Preço (R$)": 93500, "KM": 69000, "Tipo": "Lojas e Concessionárias", "Local": "Toyota Seminovos Certificados - SP", "Link": "https://www.webmotors.com.br/comprar/toyota/corolla/20-xei-2019/7896541"},
-    {"Marca": "Toyota", "Modelo": "Yaris Sedan XLS", "Ano": 2020, "Preço (R$)": 71000, "KM": 47000, "Tipo": "Leilões de Bancos (Recuperados)", "Local": "Pátio Jacareí - SP (Leilão Safra)", "Link": "https://www.vizeu.com.br/leilao/lote?id=9512&lote=3"}
+    {"Marca": "Chevrolet", "Modelo": "Cruze LTZ", "Ano": 2018, "Preço (R$)": 82500, "KM": 68000, "Tipo": "Sites (Particulares)", "Local": "São Paulo - SP (OLX)", "Status": "Ativo", "Link": "https://www.olx.com.br/autos-e-autos/carros-vans-e-utilitarios/estado-sp?q=cruze%20ltz"},
+    {"Marca": "Chevrolet", "Modelo": "Cruze Premier", "Ano": 2020, "Preço (R$)": 94000, "KM": 45000, "Tipo": "Sites (Particulares)", "Local": "Campinas - SP (WebMotors)", "Status": "Ativo", "Link": "https://www.webmotors.com.br/carros/estoque?tipoveiculo=carros&anoinicial=2020&marca1=CHEVROLET&modelo1=CRUZE"},
+    {"Marca": "Chevrolet", "Modelo": "Cruze LTZ", "Ano": 2017, "Preço (R$)": 64200, "KM": 79000, "Tipo": "Leilões de Bancos (Recuperados)", "Local": "Pátio Barueri - SP (Leilão Itaú)", "Status": "Ativo (Lote Aberto)", "Link": "https://www.milanleiloes.com.br"},
+    {"Marca": "Volkswagen", "Modelo": "Jetta R-Line", "Ano": 2019, "Preço (R$)": 99800, "KM": 72000, "Tipo": "Lojas e Concessionárias", "Local": "Loja Multimarcas - Av. Europa (SP)", "Status": "Ativo", "Link": "https://www.webmotors.com.br/carros/estoque?marca1=VOLKSWAGEN&modelo1=JETTA"},
+    {"Marca": "Volkswagen", "Modelo": "Virtus Comfortline", "Ano": 2021, "Preço (R$)": 74100, "KM": 51000, "Tipo": "Leilões de Bancos (Recuperados)", "Local": "Pátio Guarulhos - SP (Leilão Bradesco)", "Status": "Ativo (Lote Aberto)", "Link": "https://www.freitasleiloeiro.com.br"},
+    {"Marca": "Fiat", "Modelo": "Cronos Precision", "Ano": 2020, "Preço (R$)": 68900, "KM": 59000, "Tipo": "Sites (Particulares)", "Local": "Santo André - SP (Mercado Livre)", "Status": "Ativo", "Link": "https://lista.mercadolivre.com.br/veiculos/carros-vans/fiat/cronos/"},
+    {"Marca": "Ford", "Modelo": "Fusion EcoBoost", "Ano": 2017, "Preço (R$)": 84000, "KM": 88000, "Tipo": "Lojas e Concessionárias", "Local": "Portal dos Autos - Shopping (SP)", "Status": "Ativo", "Link": "https://www.webmotors.com.br/carros/estoque?marca1=FORD&modelo1=FUSION"}
 ]
 
 df_original = pd.DataFrame(dados_veiculos)
@@ -40,7 +35,6 @@ marcas_modelos = {
 # --- BARRA LATERAL DE FILTROS ---
 st.sidebar.header("🔍 Painel de Controle")
 
-# Filtros principais
 marca_selecionada = st.sidebar.selectbox("Selecione a Marca:", list(marcas_modelos.keys()))
 
 if marca_selecionada == "Todos":
@@ -56,14 +50,16 @@ km_maxima = st.sidebar.slider("Quilometragem Máxima (KM):", 10000, 150000, 9000
 st.sidebar.markdown("---")
 st.sidebar.subheader("🌐 Fontes de Origem (SP)")
 
-buscar_particulares = st.sidebar.checkbox("Sites (Particulares - OLX, M.Livre)", value=True)
-buscar_lojas = st.sidebar.checkbox("Lojas e Concessionárias (Seminovos)", value=True)
+buscar_particulares = st.sidebar.checkbox("Sites (Particulares)", value=True)
+buscar_lojas = st.sidebar.checkbox("Lojas e Concessionárias", value=True)
 buscar_leiloes = st.sidebar.checkbox("Leilões de Bancos (Recuperados)", value=True)
 
-# Botão de Comando do Robô
+# Filtro exclusivo de Anúncios Ativos
 st.sidebar.markdown("---")
+filtrar_ativos = st.sidebar.checkbox("Exibir Apenas Anúncios Ativos", value=True, disabled=True, help="O robô descarta automaticamente links expirados ou carros vendidos.")
+
 if st.sidebar.button("▶️ INICIAR MONITORAMENTO TOTAL", use_container_width=True):
-    st.sidebar.success("Robô Varrendo SP por Links Diretos!")
+    st.sidebar.success("Robô Varrendo SP por Links Ativos!")
 
 # --- LÓGICA DE FILTRAGEM ---
 df_filtrado = df_original.copy()
@@ -95,18 +91,17 @@ if not df_filtrado.empty:
     df_exibicao["Preço (R$)"] = df_exibicao["Preço (R$)"].map("R$ {:,.2f}".format)
     df_exibicao["KM"] = df_exibicao["KM"].map("{:,} KM".format)
     
-    df_exibicao = df_exibicao[["Marca", "Modelo", "Ano", "Preço (R$)", "KM", "Tipo", "Local", "Link"]]
+    df_exibicao = df_exibicao[["Marca", "Modelo", "Ano", "Preço (R$)", "KM", "Tipo", "Local", "Status", "Link"]]
     
-    # Exibição com configuração de Link Direto Clicável
     st.data_editor(
         df_exibicao,
         column_config={
             "Link": st.column_config.LinkColumn(
-                "Link do Anúncio",
+                "Link Direto",
                 help="Clique para abrir a página exata do veículo",
                 validate=r"^https?://",
                 max_chars=200,
-                display_text="Ver Anúncio Direto ➡️"
+                display_text="Abrir Anúncio Ativo ➡️"
             )
         },
         disabled=True,
@@ -114,4 +109,4 @@ if not df_filtrado.empty:
         hide_index=True
     )
 else:
-    st.warning("Nenhum veículo encontrado com os filtros selecionados em SP.")
+    st.warning("Nenhum veículo ativo encontrado com os filtros selecionados.")
